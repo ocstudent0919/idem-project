@@ -1,11 +1,15 @@
 @isTest
 public with sharing class TestDataFactory {
   // Construct a list of Account records for unit tests
-  public static List<Account> createAccounts(Integer numAccounts) {
+  public static List<Account> createAccounts(
+    Integer numAccounts,
+    Integer startCount
+  ) {
     List<Account> accounts = new List<Account>();
+
     for (Integer i = 1; i <= numAccounts; i++) {
       Account acct = new Account();
-      acct.Name = 'Test Account ' + i;
+      acct.Name = 'Test Account ' + (startCount + i);
       accounts.add(acct);
     }
     return accounts;
@@ -70,7 +74,7 @@ public with sharing class TestDataFactory {
     Integer numAccounts,
     Integer numOrders
   ) {
-    List<Account> accounts = createAccounts(numAccounts);
+    List<Account> accounts = createAccounts(numAccounts, 0);
     insert accounts;
 
     Product2 product = createProduct();
@@ -93,18 +97,65 @@ public with sharing class TestDataFactory {
     Integer numAccounts,
     Integer numOrders
   ) {
-    List<Account> accounts = createAccounts(numAccounts);
+    List<Account> accounts = createAccounts(numAccounts, 0);
     insert accounts;
-
-    Product2 product = createProduct();
-    insert product;
-
-    PriceBookEntry pbEntry = createPricebookEntry(product);
-    insert pbEntry;
 
     List<Order> orders = createOrders(numOrders, accounts);
     insert orders;
 
     return orders;
+  }
+
+  // Create accounts without orders
+  public static List<Account> createAccountsWithoutOrders(
+    Integer numAccounts,
+    Integer startCount
+  ) {
+    List<Account> accounts = createAccounts(numAccounts, startCount);
+    insert accounts;
+    return accounts;
+  }
+
+  // Create accounts with orders
+  public static List<Account> createAccountsWithOrders(
+    Integer numAccounts,
+    Integer startCount,
+    Integer numOrders
+  ) {
+    List<Account> accounts = createAccountsWithoutOrders(
+      numAccounts,
+      startCount
+    );
+
+    List<Order> orders = createOrders(numOrders, accounts);
+    insert orders;
+
+    return accounts;
+  }
+
+  // Create accounts with Call tasks
+  public static List<Account> createAccountsWithCallTasks(
+    Integer numAccounts,
+    Integer startCount
+  ) {
+    List<Account> accounts = createAccountsWithoutOrders(
+      numAccounts,
+      startCount
+    );
+    List<Task> tasks = new List<Task>();
+
+    for (Account account : accounts) {
+      tasks.add(
+        new Task(
+          WhatId = account.Id,
+          Subject = 'Call',
+          Status = 'In Progress',
+          Priority = 'Normal'
+        )
+      );
+    }
+
+    insert tasks;
+    return accounts;
   }
 }

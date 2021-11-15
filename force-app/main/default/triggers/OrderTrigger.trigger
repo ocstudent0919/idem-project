@@ -1,12 +1,12 @@
 trigger OrderTrigger on Order(before update, after delete) {
-  OrderTriggerHandler handler = new OrderTriggerHandler();
-  //Before Update
+  // Before Update
   if (Trigger.isUpdate && Trigger.isBefore) {
-    // Call handler method
-    handler.preventOrderStatusUpdate(Trigger.newMap, Trigger.oldMap);
+    // Call handler method to prevent order status update
+    Handler.preventOrderStatusUpdate(Trigger.newMap, Trigger.oldMap);
   }
-  //After Delete
+  // After Delete
   if (Trigger.isDelete && Trigger.isAfter) {
-    //ToDo
+    // Call handler method to deactivate accounts without orders
+    Handler.deactivateAccountWithNoOrders(Trigger.old);
   }
 }
