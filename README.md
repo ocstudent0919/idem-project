@@ -1,6 +1,6 @@
 # Create an Apex backend
 
-```iDEM Connect``` launch a new project to help sales reps sell smarter and track sales, customers and contracts.
+```iDEM Connect``` launches a new project to help sales reps sell smarter and track sales, customers and contracts.
 
 ## Here is a list of features/rules to be implemented:
 
