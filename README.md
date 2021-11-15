@@ -1,18 +1,17 @@
-# Salesforce DX Project: Next Steps
+# Create an Apex backend
 
-Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
+```iDEM Connect``` launch a new project to help sales reps sell smarter and track sales, customers and contracts.
 
-## How Do You Plan to Deploy Your Changes?
+## Here is a list of features/rules to be implemented:
 
-Do you want to deploy a set of changes, or create a self-contained application? Choose a [development model](https://developer.salesforce.com/tools/vscode/en/user-guide/development-models).
+### RG-01
+The user can pass the status of the order to "Active" only if the order in question has related products".
 
-## Configure Your Salesforce DX Project
+### RG-02
+When an order is added to an account, a custom field "Active" is checked automatically.
+If all the orders associated with this account are deleted, the "Active" checkbox of the account has to be unchecked.
 
-The `sfdx-project.json` file contains useful configuration information for your project. See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm) in the _Salesforce DX Developer Guide_ for details about this file.
-
-## Read All About It
-
-- [Salesforce Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
-- [Salesforce CLI Setup Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)
-- [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
-- [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
+### RG-03
+A reminder task has to be sent to the account owner if there are no orders associated with his account.
+This activity has to be created if there is no "Call" tasks added to the account in question. 
+This treatment should be triggered on the first Monday of each month. 
